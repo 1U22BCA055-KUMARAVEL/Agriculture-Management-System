@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/agri2.jpg" type="image" style="border-radius:50%;">
+    <title>Agriculture Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="loginout.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .intro h2 {
+            font-size: 2.5rem;
+            color: #2e7d32;
+        }
+
+        .intro p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+       
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feature-box {
+            width: 300px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 id="navi">Agriculture Management</h1>
+        <nav>
+            <a href="crop-management.html">Crop Management</a>
+            <a href="fertilizer-management.html">Fertilizer Management</a>
+        </nav>
+
+        <!-- Hamburger Menu -->
+        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Menu -->
+        <div id="menu" class="menu">
+            <div id="username" class="username"></div>
+            <a href="about-us.html">About Us</a>
+            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+            <div class="logout">
+                <button id="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="intro">
+            <h2>Welcome to Agriculture Management</h2>
+            <p>
+                Our Agriculture Management platform is a state-of-the-art tool designed to enhance farming practices, boost productivity,
+                and simplify agricultural management tasks for farmers and stakeholders.
+            </p>
+        </div>
+        <div class="features">
+            <div class="feature-box">
+                <h3>Crop Management</h3>
+                <p>
+                    Monitor the growth and productivity of your crops with our intuitive tools. Track total growth duration, harvest
+                    timelines, and manage data to improve yield efficiency. Click <a href="crop-management.html">here</a> to explore more.
+                </p>
+            </div>
+            <div class="feature-box">
+                <h3>Fertilizer Management</h3>
+                <p>
+                    Optimize crop nutrition with our Fertilizer Management system. Choose between natural and man-made fertilizers,
+                    and track their usage to maintain soil health and boost productivity.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Agriculture Management System. All Rights Reserved. <a href="about-us.html">Learn More</a></p>
+    </footer>
+</body>
+</html>
