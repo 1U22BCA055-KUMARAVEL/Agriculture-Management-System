@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Global Styles */
+        body {
+            background: url('img/agri2.jpg') no-repeat center center/cover;
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #007bff;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Label and Input Styling */
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f8f9fa;
+            box-sizing: border-box;
+            transition: border 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #fff;
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        /* Register Link Styling */
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        
+        <!-- Error message container -->
+        <div id="errorMessage" class="error-message">
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                const error = params.get("error");
+                if (error) {
+                    document.getElementById('errorMessage').textContent = error;
+                    document.getElementById('errorMessage').style.display = 'block';
+                }
+            </script>
+        </div>
+
+        <!-- Login Form -->
+        <form action="LoginServlet" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Register Link -->
+        <div class="register-link">
+            <p>Don't have an account? <a href="loginregistration.html">Register now</a></p>
+        </div>
+    </div>
+</body>
+</html>
