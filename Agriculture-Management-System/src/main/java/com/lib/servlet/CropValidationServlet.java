@@ -22,13 +22,17 @@ public class CropValidationServlet extends HttpServlet {
         String cropName = request.getParameter("cropName");
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
+        String url="jdbc:mysql://localhost:3306/CropDatabase";
+        String username="root";
+        String password="globalwarn1705";
 
         try {
             String query = "SELECT C.total_period, C.growth_period, C.productivity_period, S.soil_name " +
                            "FROM Crops C JOIN SoilType S ON C.soil_id = S.soil_id WHERE C.crop_name = ?";
 
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CropDatabase", "root", "globalwarn1705");
+            
+            Connection conn = DriverManager.getConnection(url,username,password);
 
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, cropName);

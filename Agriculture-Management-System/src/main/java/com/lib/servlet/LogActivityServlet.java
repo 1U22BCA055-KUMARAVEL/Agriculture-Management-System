@@ -26,7 +26,7 @@ public class LogActivityServlet extends HttpServlet {
 
         try {
             // Database connection logic
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CropManagement", "root", "globalwarn1705");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "globalwarn1705");
 
             // Query to get the total access count for each module
             String query = "SELECT module_name, SUM(access_count) AS total_accesses FROM activity_log GROUP BY module_name";
@@ -61,7 +61,7 @@ public class LogActivityServlet extends HttpServlet {
 
         try {
             // Database connection logic
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CropManagement", "root", "globalwarn1705");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "globalwarn1705");
 
             // Insert or update the activity log when the user visits a module
             String query = "INSERT INTO activity_log (username, module_name, access_time, access_count) " +

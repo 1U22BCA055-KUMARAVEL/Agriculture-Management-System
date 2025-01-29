@@ -8,8 +8,7 @@ function validateCrop() {
         return;
     }
 
-    // AJAX request to check crop validity
-    fetch("CropValidationServlet", {
+    fetch("/CropValidationServlet", { // FIXED URL
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -26,7 +25,7 @@ function validateCrop() {
             notification.textContent = "Crop validated successfully!";
             notification.className = "notification success";
         } else {
-            notification.textContent = "Invalid crop name. Please try again.";
+            notification.textContent = data.message || "Invalid crop name. Please try again.";
             notification.className = "notification error";
         }
     })
