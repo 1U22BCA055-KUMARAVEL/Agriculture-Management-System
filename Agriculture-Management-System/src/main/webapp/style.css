@@ -129,7 +129,28 @@
 
         button:active {
             background-color: #2e7d32;
-        }
+		        }
+		        
+		#create-report-btn {
+		    background-color: #2e7d32;
+		    color: white;
+		    padding: 10px 20px;
+		    border: none;
+		    border-radius: 8px;
+		    font-size: 1.1rem;
+		    cursor: pointer;
+		    transition: background-color 0.3s;
+		    position: fixed;
+		    bottom: 20px;
+		    right: 20px;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		    display: none; /* Initially hidden */
+		}
+		
+		#create-report-btn:hover {
+		    background-color: #1b5e20;
+		}
+        
 	/* Footer Styles */
         footer {
             background-color: #2e7d32;

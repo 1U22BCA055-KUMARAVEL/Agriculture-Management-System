@@ -28,47 +28,28 @@ $(document).ready(function() {
                 $('#logout-btn').hide(); // Hide logout button if not logged in
                 $('#login-btn').show();  // Show login button
             }
+
+            // Check if the username is 'admin'
+            
         },
         error: function() {
             alert('Error checking session. Please try again later.');
         }
     });
+
+    // Log page visits and module access when the page is loaded
+    var moduleName = 'module_name_here'; // Set this dynamically based on the page/module the user is visiting
+    var username = 'user_name_here'; // Fetch the logged-in user's username dynamically
+
+    $.post('logActivity', {username: username, module_name: moduleName}, function(response) {
+        console.log(response); // Log successful access
+    }).fail(function() {
+        alert('Error logging module visit');
+    });
+
+    // Handle Create Report button click
+    $('#create-report-btn').click(function() {
+        // Open a new tab to display the report
+        var reportWindow = window.open('logActivity', '_blank');
+    });
 });
-
- function validateCrop() {
-        const cropName = document.getElementById("cropName").value;
-        const notification = document.getElementById("notification");
-
-        if (cropName.trim() === "") {
-            notification.textContent = "Please enter a crop name.";
-            notification.className = "notification error";
-            return;
-        }
-
-        // AJAX request to check crop validity
-        fetch("CropValidationServlet", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `cropName=${encodeURIComponent(cropName)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.valid) {
-                document.getElementById("totalPeriod").value = data.totalPeriod;
-                document.getElementById("growthPeriod").value = data.growthPeriod;
-                document.getElementById("productivityPeriod").value = data.productivityPeriod;
-                notification.textContent = "Crop validated successfully!";
-                notification.className = "notification success";
-            } else {
-                notification.textContent = "Invalid crop name. Please try again.";
-                notification.className = "notification error";
-            }
-        })
-        .catch(error => {
-            notification.textContent = "An error occurred: " + error.message;
-            notification.className = "notification error";
-        });
-    }
-
