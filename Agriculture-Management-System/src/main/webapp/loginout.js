@@ -24,13 +24,15 @@ $(document).ready(function() {
                 $('#username').text('Hello, ' + response.username); // Set username if logged in
                 $('#logout-btn').show(); // Show logout button
                 $('#login-btn').hide();  // Hide login button
+
+                // Check if the username is 'admin'
+                if (response.username === 'admin') {
+                    $('#create-report-btn').show(); // Show the Create Report button for admin
+                }
             } else {
                 $('#logout-btn').hide(); // Hide logout button if not logged in
                 $('#login-btn').show();  // Show login button
             }
-
-            // Check if the username is 'admin'
-            
         },
         error: function() {
             alert('Error checking session. Please try again later.');
