@@ -9,7 +9,6 @@
     <script src="loginout.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>	
-    
         /* Content Area */
         .content {
             flex: 1;
@@ -32,7 +31,52 @@
             margin-bottom: 20px;
         }
 
-        
+        /* Form Styling */
+        .form-container {
+            margin-top: 30px;
+        }
+
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container label {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-container button {
+            background-color: #2e7d32;
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .form-container button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .fertilizer-box {
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2e7d32;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -43,17 +87,15 @@
             <a href="crop-management.html">Crop Management</a>
         </nav>
         <!-- Hamburger Menu Icon -->
-<div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-</div>
-
-
-    <!-- Menu -->
+        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <!-- Menu -->
         <div id="menu" class="menu">
             <div id="username" class="username"></div>
-            <a href="Homepage.html">Home</a><br>
+            <a href="Homepage.html">Home</a>
             <a href="about-us.html">About Us</a>
             <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
             <div class="logout">
@@ -61,24 +103,79 @@
             </div>
         </div>
     </header>
-<main>
-    <!-- Main Content Area -->
-    <div class="content">
-        <h2>Optimize Your Crop's Nutrition</h2>
-        <p>
-            Welcome to the Fertilizer Management System. Our platform provides tools to help you manage and optimize the use of fertilizers for better crop yields. Track fertilizer types, usage schedules, and their impact on soil health.
-        </p>
-        <p>
-            Discover sustainable practices to ensure your fields remain productive and environmentally friendly. Explore features to analyze and monitor fertilizer application and maximize productivity.
-        </p>
-        <p>
-            Ready to start? <a href="crop-management.html">Learn More about Crop Management</a> or <a href="about-us.html">get to know us</a>.
-        </p>
-    </div>
-</main>
+
+    <main>
+        <!-- Main Content Area -->
+        <div class="content">
+            <h2>Optimize Your Crop's Nutrition</h2>
+            <p>
+                Welcome to the Fertilizer Management System. Manage and optimize the use of fertilizers for better crop yields. 
+            </p>
+
+            <div class="form-container">
+                <label for="previous-crop">Previous Crop:</label>
+                <input type="text" id="previous-crop" name="previous-crop" placeholder="Enter previous crop">
+
+                <label for="current-crop">Current Crop:</label>
+                <input type="text" id="current-crop" name="current-crop" placeholder="Enter current crop">
+
+                <label for="soil-type">Soil Type:</label>
+                <input type="text" id="soil-type" name="soil-type" placeholder="Enter soil type">
+
+                <label for="acres">Number of Acres:</label>
+                <input type="number" id="acres" name="acres" placeholder="Enter number of acres">
+
+                <label for="fertilizer-type">Fertilizer Type:</label>
+                <select id="fertilizer-type" name="fertilizer-type">
+                    <option value="">Select Fertilizer Type</option>
+                    <option value="natural">Natural Fertilizer</option>
+                    <option value="man-made">Man-made Fertilizer</option>
+                </select>
+
+                <!-- Fertilizer Recommended Amount Textbox -->
+                <div id="fertilizer-box" class="fertilizer-box">
+                    <label for="recommended-fertilizer">Recommended Amount of Fertilizer:</label>
+                    <input type="text" id="recommended-fertilizer" name="recommended-fertilizer" disabled placeholder="Calculated amount will appear here">
+                </div>
+
+                <!-- Calculate Button -->
+                <button id="calculate-btn" onclick="calculateFertilizer()" disabled>Calculate</button>
+            </div>
+        </div>
+    </main>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Agriculture Management System. All Rights Reserved. <a href="about-us.html">Learn More</a></p>
     </footer>
+
+    <script>
+        // Script to toggle fertilizer box and enable calculate button
+        document.getElementById('fertilizer-type').addEventListener('change', function() {
+            var fertilizerType = this.value;
+            var fertilizerBox = document.getElementById('fertilizer-box');
+            var calculateBtn = document.getElementById('calculate-btn');
+            
+            if (fertilizerType) {
+                fertilizerBox.style.display = 'block';
+                calculateBtn.disabled = false;
+            } else {
+                fertilizerBox.style.display = 'none';
+                calculateBtn.disabled = true;
+            }
+        });
+
+        // Function to calculate recommended fertilizer amount (this is just a placeholder for now)
+        function calculateFertilizer() {
+            var fertilizerType = document.getElementById('fertilizer-type').value;
+            var recommendedFertilizer = document.getElementById('recommended-fertilizer');
+            
+            if (fertilizerType === 'natural') {
+                recommendedFertilizer.value = "Natural Fertilizer Calculation";
+            } else if (fertilizerType === 'man-made') {
+                recommendedFertilizer.value = "Man-made Fertilizer Calculation";
+            }
+        }
+    </script>
 </body>
 </html>
