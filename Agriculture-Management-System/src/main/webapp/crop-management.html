@@ -66,8 +66,6 @@
             cursor: not-allowed;
         }
 
-       
-
         .notification {
             padding: 10px;
             margin-bottom: 20px;
@@ -85,10 +83,7 @@
             background-color: #ffcccb;
             color: #d32f2f;
         }
-
-       
     </style>
-    
 </head>
 <body>
     <!-- Header -->
@@ -97,19 +92,17 @@
         <nav>
             <a href="crop-management.html">Crop Management</a>
             <a href="fertilizer-management.html">Fertilizer Management</a>
-            
         </nav>
-        <!-- Hamburger Menu Icon -->
-<div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-</div>
 
+        <!-- Hamburger Menu -->
+        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
 
- <!-- Menu -->
+        <!-- Menu -->
         <div id="menu" class="menu">
-             
             <div id="username" class="username"></div>
             <a href="Homepage.html">Home</a>
             <a href="about-us.html">About Us</a>
@@ -118,7 +111,6 @@
                 <button id="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
-        
     </header>
 
     <!-- Main Content -->
@@ -129,8 +121,10 @@
             <form>
                 <label for="cropName">Crop Name:</label>
                 <input type="text" id="cropName" name="cropName" placeholder="Enter crop name" required>
-                <button type="button" onclick="validateCrop()">Validate Crop</button>
-                
+
+                <label for="soilType">Soil Type:</label>
+                <input type="text" id="soilType" name="soilType" placeholder="Auto-filled" readonly>
+
                 <label for="totalPeriod">Total Period (Days):</label>
                 <input type="text" id="totalPeriod" name="totalPeriod" placeholder="Auto-filled" readonly>
                 
@@ -139,6 +133,8 @@
                 
                 <label for="productivityPeriod">Productivity Period (Days):</label>
                 <input type="text" id="productivityPeriod" name="productivityPeriod" placeholder="Auto-filled" readonly>
+
+                <button type="button" onclick="validateCrop()">Validate Crop</button>
             </form>
         </div>
     </main>
