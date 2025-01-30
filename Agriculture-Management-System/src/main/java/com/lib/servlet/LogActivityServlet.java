@@ -25,6 +25,8 @@ public class LogActivityServlet extends HttpServlet {
         StringBuilder summaryReport = new StringBuilder();
 
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             // Database connection logic
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "globalwarn1705");
 
@@ -60,6 +62,8 @@ public class LogActivityServlet extends HttpServlet {
         String moduleName = request.getParameter("module_name");
 
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             // Database connection logic
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "globalwarn1705");
 

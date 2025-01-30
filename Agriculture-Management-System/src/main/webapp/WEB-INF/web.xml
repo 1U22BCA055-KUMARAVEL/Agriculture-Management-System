@@ -31,7 +31,9 @@
   <servlet>
     <servlet-name>CropValidationServlet</servlet-name>
     <servlet-class>com.lib.servlet.CropValidationServlet</servlet-class>
-  </servlet>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+
 
   <servlet-mapping>
     <servlet-name>CropValidationServlet</servlet-name>
