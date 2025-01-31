@@ -3,179 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="img/agri2.jpg" type="image" style="border-radius:50%;">
-    <title>Fertilizer Management</title>
+    <title>Fertilizer Recommendations</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="loginout.js"></script>
     <link rel="stylesheet" href="style.css">
-    <style>	
-        /* Content Area */
-        .content {
-            flex: 1;
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.9);
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .content h2 {
-            font-size: 2.5rem;
-            color: #2e7d32;
-            margin-bottom: 20px;
-        }
-
-        .content p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        /* Form Styling */
-        .form-container {
-            margin-top: 30px;
-        }
-
-        .form-container input, .form-container select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .form-container label {
-            font-size: 1.2rem;
-            color: #333;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .form-container button {
-            background-color: #2e7d32;
-            color: white;
-            font-size: 1.2rem;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .form-container button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .fertilizer-box {
-            display: none;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #2e7d32;
-            color: white;
-        }
-    </style>
+    <script src="loginout.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1 id="navi">Fertilizer Management</h1>
-        <nav>
-            <a href="crop-management.html">Crop Management</a>
-        </nav>
-        <!-- Hamburger Menu Icon -->
-        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
-        <!-- Menu -->
-        <div id="menu" class="menu">
-            <div id="username" class="username"></div>
-            <a href="Homepage.html">Home</a>
-            <a href="about-us.html">About Us</a>
-            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
-            <div class="logout">
-                <button id="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    </header>
+    <h1>Fertilizer Recommendations</h1>
+    <form id="fertilizerForm">
+        <label for="currentCrop">Select Crop:</label>
+        <select id="currentCrop" name="currentCrop">
+            <option value="Wheat">Wheat</option>
+            <option value="Rice">Rice</option>
+            <option value="Maize">Maize</option>
+            <!-- Add more crops as needed -->
+        </select>
+        <br><br>
 
-    <main>
-        <!-- Main Content Area -->
-        <div class="content">
-            <h2>Optimize Your Crop's Nutrition</h2>
-            <p>
-                Welcome to the Fertilizer Management System. Manage and optimize the use of fertilizers for better crop yields. 
-            </p>
+        <label for="soilType">Select Soil Type:</label>
+        <select id="soilType" name="soilType">
+            <option value="Red">Red</option>
+            <option value="Black">Black</option>
+            <!-- Add more soil types as needed -->
+        </select>
+        <br><br>
 
-            <div class="form-container">
-                <label for="previous-crop">Previous Crop:</label>
-                <input type="text" id="previous-crop" name="previous-crop" placeholder="Enter previous crop">
+        <label for="fertilizerType">Select Fertilizer Type:</label>
+        <select id="fertilizerType" name="fertilizerType">
+            <option value="natural">Natural</option>
+            <option value="man-made">Man-made</option>
+        </select>
+        <br><br>
 
-                <label for="current-crop">Current Crop:</label>
-                <input type="text" id="current-crop" name="current-crop" placeholder="Enter current crop">
+        <button type="submit">Get Recommendations</button>
+    </form>
 
-                <label for="soil-type">Soil Type:</label>
-                <input type="text" id="soil-type" name="soil-type" placeholder="Enter soil type">
+    <br><br>
 
-                <label for="acres">Number of Acres:</label>
-                <input type="number" id="acres" name="acres" placeholder="Enter number of acres">
-
-                <label for="fertilizer-type">Fertilizer Type:</label>
-                <select id="fertilizer-type" name="fertilizer-type">
-                    <option value="">Select Fertilizer Type</option>
-                    <option value="natural">Natural Fertilizer</option>
-                    <option value="man-made">Man-made Fertilizer</option>
-                </select>
-
-                <!-- Fertilizer Recommended Amount Textbox -->
-                <div id="fertilizer-box" class="fertilizer-box">
-                    <label for="recommended-fertilizer">Recommended Amount of Fertilizer:</label>
-                    <input type="text" id="recommended-fertilizer" name="recommended-fertilizer" disabled placeholder="Calculated amount will appear here">
-                </div>
-
-                <!-- Calculate Button -->
-                <button id="calculate-btn" onclick="calculateFertilizer()" disabled>Calculate</button>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Agriculture Management System. All Rights Reserved. <a href="about-us.html">Learn More</a></p>
-    </footer>
+    <h3>Fertilizer Recommendations:</h3>
+    <div id="fertilizerResults">
+        <textarea id="fertilizerOutput" rows="4" cols="50" readonly></textarea>
+    </div>
 
     <script>
-        // Script to toggle fertilizer box and enable calculate button
-        document.getElementById('fertilizer-type').addEventListener('change', function() {
-            var fertilizerType = this.value;
-            var fertilizerBox = document.getElementById('fertilizer-box');
-            var calculateBtn = document.getElementById('calculate-btn');
-            
-            if (fertilizerType) {
-                fertilizerBox.style.display = 'block';
-                calculateBtn.disabled = false;
-            } else {
-                fertilizerBox.style.display = 'none';
-                calculateBtn.disabled = true;
-            }
-        });
+        $(document).ready(function() {
+            $("#fertilizerForm").submit(function(event) {
+                event.preventDefault(); // Prevent form from submitting the traditional way
 
-        // Function to calculate recommended fertilizer amount (this is just a placeholder for now)
-        function calculateFertilizer() {
-            var fertilizerType = document.getElementById('fertilizer-type').value;
-            var recommendedFertilizer = document.getElementById('recommended-fertilizer');
-            
-            if (fertilizerType === 'natural') {
-                recommendedFertilizer.value = "Natural Fertilizer Calculation";
-            } else if (fertilizerType === 'man-made') {
-                recommendedFertilizer.value = "Man-made Fertilizer Calculation";
-            }
-        }
+                var currentCrop = $("#currentCrop").val();
+                var soilType = $("#soilType").val();
+                var fertilizerType = $("#fertilizerType").val();
+
+                $.ajax({
+                    url: "/Agriculture-Management-System/FertilizerServlet", // URL of the servlet
+                    method: "POST",
+                    data: {
+                        currentCrop: currentCrop,
+                        soilType: soilType,
+                        fertilizerType: fertilizerType
+                    },
+                    success: function(response) {
+                        var resultText = "";
+                        if (fertilizerType === "natural") {
+                            resultText = "Organic Matter: " + response.organicMatter;
+                        } else if (fertilizerType === "man-made") {
+                            resultText = "Nitrogen: " + response.nitrogen + "\n" +
+                                         "Phosphorus: " + response.phosphorus + "\n" +
+                                         "Potassium: " + response.potassium;
+                        } else {
+                            resultText = "Invalid fertilizer type selected.";
+                        }
+
+                        $("#fertilizerOutput").val(resultText);
+                    },
+                    error: function() {
+                        alert("Error fetching fertilizer recommendations.");
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
