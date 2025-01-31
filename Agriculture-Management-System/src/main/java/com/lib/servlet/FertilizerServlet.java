@@ -30,6 +30,8 @@ public class FertilizerServlet extends HttpServlet {
         String jdbcURL = "jdbc:mysql://localhost:3306/CropDatabase";
         String dbUser = "root";
         String dbPassword = "globalwarn1705"; // Change this accordingly
+     // Prepare the response based on the fertilizer type
+        JSONObject jsonResponse = new JSONObject();
 
         try {
             // Set up database connection
@@ -54,9 +56,10 @@ public class FertilizerServlet extends HttpServlet {
                 potassium = rs.getDouble("potassium_kg_per_ha");
                 organicMatter = rs.getDouble("organic_matter_tons_per_ha");
             }
-
-            // Prepare the response based on the fertilizer type
-            JSONObject jsonResponse = new JSONObject();
+            else {
+            	jsonResponse.put("error", "No data found for selected crop and soil.");
+            }
+            
             if ("natural".equals(fertilizerType)) {
                 // Return only organic matter for natural fertilizers
                 jsonResponse.put("organicMatter", organicMatter + " tons per hectare");
