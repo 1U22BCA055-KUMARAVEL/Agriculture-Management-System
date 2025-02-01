@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Management</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Our updated JavaScript file -->
+  <script src="Crop-management.js"></script>
+  <link rel="stylesheet" href="crop.css">
+</head>
+<body>
+  <header>
+    <h1>Crop Management</h1>
+  </header>
+  <main>
+    <div class="container">
+      <form id="cropForm">
+        <label for="landform">Landform:</label>
+        <select id="landform" name="landform">
+          <option value="Valley">Valley</option>
+          <option value="Mountain Slopes">Mountain Slopes</option>
+          <option value="Plateau">Plateau</option>
+          <option value="Plains">Plains</option>
+          <option value="Coastal">Coastal</option>
+          <option value="Desert">Desert</option>
+        </select>
+        
+        <label for="climate">Climate:</label>
+        <select id="climate" name="climate">
+          <option>Humid & Fertile</option>
+          <option>Cool, Humid, Temperate</option>
+          <option>Semi-Arid, Dry Temperate</option>
+          <option>Temperate, Subtropical</option>
+          <option>Tropical, Humid</option>
+          <option>Arid, Hot, Dry</option>
+        </select>
+        
+        <label for="soiltype">Soil Type:</label>
+        <select id="soiltype" name="soiltype">
+          <option value="Alluvial Soil">Alluvial Soil</option>
+          <option value="Loamy Soil">Loamy Soil</option>
+          <option value="Volcanic Soil">Volcanic Soil</option>
+          <option value="Black Soil">Black Soil</option>
+          <option value="Laterite Soil">Laterite Soil</option>
+          <option value="Clayey Soil">Clayey Soil</option>
+          <option value="Sandy Soil">Sandy Soil</option>
+          <option value="Saline Soil">Saline Soil</option>
+          <option value="Arid Soil">Arid Soil</option>
+        </select>
+        
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+          <option value="Bangladesh">Bangladesh</option>
+          <option value="Egypt">Egypt</option>
+          <option value="Vietnam">Vietnam</option>
+          <option value="Pakistan">Pakistan</option>
+          <option value="Nepal">Nepal</option>
+          <option value="Ethiopia">Ethiopia</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Kenya">Kenya</option>
+          <option value="India">India</option>
+          <option value="Brazil">Brazil</option>
+          <option value="South Africa">South Africa</option>
+          <option value="Australia">Australia</option>
+          <option value="Mexico">Mexico</option>
+          <option value="United States">United States</option>
+          <option value="Ukraine">Ukraine</option>
+          <option value="Russia">Russia</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Canada">Canada</option>
+          <option value="Philippines">Philippines</option>
+          <option value="Indonesia">Indonesia</option>
+          <option value="Sri Lanka">Sri Lanka</option>
+          <option value="Saudi Arabia">Saudi Arabia</option>
+          <option value="United Arab Emirates">United Arab Emirates</option>
+          <option value="Sudan">Sudan</option>
+        </select>
+        
+        <label for="majorCrop">Major Crop:</label>
+        <select id="majorCrop" name="majorCrop">
+          <option value="Rice">Rice</option>
+          <option value="Sugarcane">Sugarcane</option>
+          <option value="Jute">Jute</option>
+          <option value="Banana">Banana</option>
+          <option value="Rice">Rice</option>
+          <option value="Tea">Tea</option>
+          <option value="Coffee">Coffee</option>
+          <option value="Apple">Apple</option>
+          <option value="Walnut">Walnut</option>
+          <option value="Cardamom">Cardamom</option>
+          <option value="Sorghum">Sorghum</option>
+          <option value="Cotton">Cotton</option>
+          <option value="Finger Millet">Finger Millet</option>
+          <option value="Groundnut">Groundnut</option>
+          <option value="Wheat">Wheat</option>
+          <option value="Maize">Maize</option>
+          <option value="Sunflower">Sunflower</option>
+          <option value="Barley">Barley</option>
+          <option value="Coconut">Coconut</option>
+          <option value="Cashew">Cashew</option>
+          <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
+          <option value="Date Palm">Date Palm</option>
+          <option value="Guar">Guar</option>
+          <option value="Pearl Millet">Pearl Millet</option>
+          <option value="Aloe Vera">Aloe Vera</option>
+        </select>
+        
+        <button type="button" id="calculate">Calculate</button>
+                
+        <label for="totalPeriod">Total Period (Days):</label>
+        <input type="text" id="totalPeriod" name="totalPeriod" readonly>
+                
+        <label for="growthPeriod">Growth Period (Days):</label>
+        <input type="text" id="growthPeriod" name="growthPeriod" readonly>
+                
+        <label for="productivityPeriod">Productivity Period (Days):</label>
+        <input type="text" id="productivityPeriod" name="productivityPeriod" readonly>
+      </form>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Agriculture Management System. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

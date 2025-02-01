@@ -4,10 +4,8 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          id="WebApp_ID" version="5.0">
 
-  <!-- Display Name -->
   <display-name>Agriculture-Management-System</display-name>
 
-  <!-- Welcome File List -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -17,7 +15,7 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
 
-  <!-- Servlet Configuration -->
+  <!-- Login Servlet Configuration (if used) -->
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>com.lib.servlet.LoginServlet</servlet-class>
@@ -26,18 +24,11 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
+  
+  
 
-  <!-- CropValidationServlet Configuration -->
-  <servlet>
-    <servlet-name>CropValidationServlet</servlet-name>
-    <servlet-class>com.lib.servlet.CropValidationServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CropValidationServlet</servlet-name>
-    <url-pattern>/CropValidationServlet</url-pattern>
-  </servlet-mapping>
-
-  <!-- Charset Encoding Filter (Optional but recommended) -->
+  <!-- Charset Encoding Filter (Optional) -->
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
@@ -46,10 +37,9 @@
       <param-value>UTF-8</param-value>
     </init-param>
   </filter>
-
   <filter-mapping>
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
+  
 </web-app>
