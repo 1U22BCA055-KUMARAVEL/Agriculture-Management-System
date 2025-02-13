@@ -17,32 +17,43 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/CropManagementServlet")
 public class CropManagementServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    // Database connection settings
     private static final String DB_URL = "jdbc:mysql://localhost:3306/LandformClimateCrops";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "globalwarn1705";
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        response.setContentType("application/json");
         JSONObject jsonResponse = new JSONObject();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            if ("getCountries".equals(action)) {
-                String landform = request.getParameter("landform");
-                jsonResponse.put("countries", getCountriesByLandform(conn, landform));
-            } else if ("getCrops".equals(action)) {
-                String country = request.getParameter("country");
-                jsonResponse.put("crops", getCropsByCountry(conn, country));
-            } else if ("getPeriods".equals(action)) {
-                String crop = request.getParameter("crop");
-                JSONObject periods = getCropPeriods(conn, crop);
-                jsonResponse.put("totalPeriod", periods.getInt("totalPeriod"));
-                jsonResponse.put("growthPeriod", periods.getInt("growthPeriod"));
-                jsonResponse.put("productivityPeriod", periods.getInt("productivityPeriod"));
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            switch (action) {
+                case "getCountriesByLandform":
+                    String landform = request.getParameter("landform");
+                    jsonResponse.put("countries", getCountriesByLandform(conn, landform));
+                    break;
+
+                case "getCropsByCountry":
+                    String country = request.getParameter("country");
+                    jsonResponse.put("crops", getCropsByCountry(conn, country));
+                    break;
+
+                case "getPeriods":
+                    String crop = request.getParameter("crop");
+                    JSONObject periods = getCropPeriods(conn, crop);
+                    jsonResponse.put("totalPeriod", periods.getInt("totalPeriod"));
+                    jsonResponse.put("growthPeriod", periods.getInt("growthPeriod"));
+                    jsonResponse.put("productivityPeriod", periods.getInt("productivityPeriod"));
+                    break;
+
+                default:
+                    jsonResponse.put("error", "Invalid action.");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -51,14 +62,12 @@ public class CropManagementServlet extends HttpServlet {
                 e1.printStackTrace();
             }
         }
-
-        response.setContentType("application/json");
         response.getWriter().write(jsonResponse.toString());
     }
 
     private JSONArray getCountriesByLandform(Connection conn, String landform) throws Exception {
         JSONArray countries = new JSONArray();
-        String query = "SELECT DISTINCT country FROM Crops WHERE landform_id = (SELECT landform_id FROM Landforms WHERE landform_name = ?)";
+        String query = "SELECT DISTINCT country FROM Crops WHERE landform = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, landform);
             ResultSet rs = stmt.executeQuery();
@@ -71,12 +80,12 @@ public class CropManagementServlet extends HttpServlet {
 
     private JSONArray getCropsByCountry(Connection conn, String country) throws Exception {
         JSONArray crops = new JSONArray();
-        String query = "SELECT DISTINCT crop_name FROM Crops WHERE country_id = (SELECT country_id FROM Countries WHERE country_name = ?)";
+        String query = "SELECT DISTINCT crop FROM Crops WHERE country = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, country);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                crops.put(rs.getString("crop_name"));
+                crops.put(rs.getString("crop"));
             }
         }
         return crops;
@@ -84,21 +93,16 @@ public class CropManagementServlet extends HttpServlet {
 
     private JSONObject getCropPeriods(Connection conn, String crop) throws Exception {
         JSONObject periods = new JSONObject();
-        String query = "SELECT cp.total_period, cp.growth_period, cp.productivity_period " +
-                       "FROM CropPeriods cp " +
-                       "JOIN Crops c ON cp.crop_id = c.crop_id " +
-                       "WHERE c.crop_name = ?";
+        String query = "SELECT totalPeriod, growthPeriod, productivityPeriod FROM Crops WHERE crop = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, crop);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                periods.put("totalPeriod", rs.getInt("total_period"));
-                periods.put("growthPeriod", rs.getInt("growth_period"));
-                periods.put("productivityPeriod", rs.getInt("productivity_period"));
+                periods.put("totalPeriod", rs.getInt("totalPeriod"));
+                periods.put("growthPeriod", rs.getInt("growthPeriod"));
+                periods.put("productivityPeriod", rs.getInt("productivityPeriod"));
             } else {
-                periods.put("totalPeriod", 0);
-                periods.put("growthPeriod", 0);
-                periods.put("productivityPeriod", 0);
+                throw new Exception("Crop not found in the database.");
             }
         }
         return periods;
