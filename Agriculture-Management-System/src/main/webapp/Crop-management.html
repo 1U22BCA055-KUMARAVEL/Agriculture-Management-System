@@ -8,6 +8,8 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Our updated JavaScript file -->
   <script src="Crop-management.js"></script>
+      <script src="loginout.js"></script>
+  
   <link rel="stylesheet" href="style.css">
   <style > 
   			
@@ -84,8 +86,30 @@
 </head>
 <body>
   <header>
-    <h1>Crop Management</h1>
-  </header>
+        <h1 id="navi">Crop Management</h1>
+        <nav>
+            <a href="fertilizer-management.html">Fertilizer Management</a>
+        </nav>
+
+        <!-- Hamburger Menu -->
+        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Menu -->
+        <div id="menu" class="menu">
+            <div id="username" class="username"></div>
+            <a href="Homepage.html">Home</a>
+            <a href="about-us.html">About Us</a>
+            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+            <div class="logout">
+                <button id="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
   <main>
     <div class="container">
       <form id="cropForm">
