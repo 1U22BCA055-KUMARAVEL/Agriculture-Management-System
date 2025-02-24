@@ -27,7 +27,7 @@ public class FertilizerServlet extends HttpServlet {
         double nitrogen = 0, phosphorus = 0, potassium = 0, organicMatter = 0;
         boolean isNitrogenFixer = false;
 
-        String jdbcURL = "jdbc:mysql://localhost:3306/CropFertilizerDatabase";
+        String jdbcURL = "jdbc:mysql://localhost:3306/Agriculture_Management_System";
         String dbUser = "root";
         String dbPassword = "globalwarn1705";
         JSONObject jsonResponse = new JSONObject();
