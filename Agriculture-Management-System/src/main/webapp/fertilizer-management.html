@@ -128,6 +128,15 @@
         </header>
     
     <form id="fertilizerForm">
+    	<label for="previousCrop">Previous Crop</label>
+    	<select id="previousCrop" name="previousCrop">
+            <option value="Wheat">Groundnut</option>
+            <option value="Rice">Rice</option>
+            <option value="Maize">Maize</option>
+            <!-- Add more crops as needed -->
+        </select>
+        <br><br>
+    	
         <label for="currentCrop">Select Crop:</label>
         <select id="currentCrop" name="currentCrop">
             <option value="Wheat">Wheat</option>
@@ -161,6 +170,8 @@
         <textarea id="fertilizerOutput" rows="4" cols="50" readonly></textarea>
     </div>
 
-    
+    <footer>
+        <p>&copy; 2025 Agriculture Management System. All Rights Reserved. <a href="about-us.html">Learn More</a></p>
+    </footer>
 </body>
 </html>

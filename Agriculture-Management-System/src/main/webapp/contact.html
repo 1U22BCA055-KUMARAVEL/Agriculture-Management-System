@@ -6,6 +6,7 @@
     <title>Contact Us</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="loginout.js"></script>
     <style>
         .container {
             max-width: 800px;
@@ -15,18 +16,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-		header a{
-		color:white;
-		}
-		header a:hover{
- 			background-color: #66bb6a;		
- 			
- 			}
-        h1 {
-            color: #2e7d32;
-            margin-bottom: 1rem;
-        }
-
+		
+       
         form {
             display: flex;
             flex-direction: column;
@@ -56,35 +47,31 @@
             background-color: #66bb6a;
         }
     </style>
-    <script>
-        function openGmailWebInterface() {
-            // Retrieve the form values
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const subject = document.getElementById("subject").value;
-            const message = document.getElementById("message").value;
-
-            // Receiver email
-            const recipientEmail = "kumarvel17052005@gmail.com";
-
-            // Format the Gmail web link
-            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-                recipientEmail
-            )}&su=${encodeURIComponent(
-                "Contact Form Submission: " + subject
-            )}&body=${encodeURIComponent(
-                `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-            )}`;
-
-            // Open Gmail web interface in a new tab
-            window.open(gmailLink, "_blank");
-        }
-    </script>
 </head>
 <body>
     <header>
-        <h1>Contact Us</h1>
+    <h1 id="navi">Contact Us</h1>
+        <nav>
         <a href="Homepage.html">Home</a>
+        <a href="Crop-management.html">Crop Management</a>
+            <a href="fertilizer-management.html">Fertilizer Management</a>
+       
+        </nav>
+        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Menu -->
+        <div id="menu" class="menu">
+            <div id="username" class="username"></div>
+            <a href="about-us.html">About Us</a>
+            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+            <div class="logout">
+                <button id="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
     </header>
 
     <div class="container">
