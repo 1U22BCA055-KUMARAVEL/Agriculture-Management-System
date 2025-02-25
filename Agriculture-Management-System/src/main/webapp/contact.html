@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/agri2.jpg" type="image/png">
     <title>Contact Us</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -47,6 +48,31 @@
             background-color: #66bb6a;
         }
     </style>
+    <script>
+    function openGmailWebInterface() {
+        // Retrieve the form values
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        // Receiver email
+        const recipientEmail = "kumarvel17052005@gmail.com";
+
+        // Format the Gmail web link
+        const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+            recipientEmail
+        )}&su=${encodeURIComponent(
+            "Contact Form Submission: " + subject
+        )}&body=${encodeURIComponent(
+            `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+        )}`;
+
+        // Open Gmail web interface in a new tab
+        window.open(gmailLink, "_blank");
+    }
+
+    </script>
 </head>
 <body>
     <header>

@@ -54,27 +54,5 @@ $(document).ready(function() {
         // Open a new tab to display the report
         var reportWindow = window.open('logActivity', '_blank');
     });
-	function openGmailWebInterface() {
-	            // Retrieve the form values
-	            const name = document.getElementById("name").value;
-	            const email = document.getElementById("email").value;
-	            const subject = document.getElementById("subject").value;
-	            const message = document.getElementById("message").value;
-
-	            // Receiver email
-	            const recipientEmail = "kumarvel17052005@gmail.com";
-
-	            // Format the Gmail web link
-	            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-	                recipientEmail
-	            )}&su=${encodeURIComponent(
-	                "Contact Form Submission: " + subject
-	            )}&body=${encodeURIComponent(
-	                `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-	            )}`;
-
-	            // Open Gmail web interface in a new tab
-	            window.open(gmailLink, "_blank");
-	        }
-
+	
 });
