@@ -6,110 +6,31 @@
   <title>Crop Management</title>
   <link rel="icon" href="img/agri2.jpg" type="image">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Our updated JavaScript file -->
   <script src="Crop-management.js"></script>
-      <script src="loginout.js"></script>
-  
+  <script src="loginout.js"></script>
   <link rel="stylesheet" href="style.css">
-  <style > 
-  			
-			/* Main Content */
-			main {
-			    flex: 1;
-			    display: flex;
-			    justify-content: center;
-			    align-items: center;
-			    background-color: rgba(255, 255, 255, 0.9);
-			    padding: 20px;
-			}
-			
-			/* Form Container */
-			.container {
-			    background-color: #e8f5e9;
-			    padding: 20px;
-			    border-radius: 10px;
-			    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-			    width: 400px;
-			}
-			
-			/* Form Elements */
-			form {
-			    display: flex;
-			    flex-direction: column;
-			}
-			
-			label {
-			    font-weight: bold;
-			    margin-top: 10px;
-			    color: #2e7d32;
-			}
-			
-			select, input {
-			    padding: 8px;
-			    border-radius: 5px;
-			    border: 1px solid #c8e6c9;
-			    font-size: 1rem;
-			    background-color: white;
-			}
-			
-			/* Button */
-			button {
-			    margin-top: 15px;
-			    padding: 12px;
-			    font-size: 1rem;
-			    font-weight: bold;
-			    background-color: #2e7d32;
-			    color: white;
-			    border: none;
-			    border-radius: 8px;
-			    cursor: pointer;
-			    transition: all 0.3s ease;
-			}
-			
-			button:hover {
-			    background-color: #1b5e20;
-			    transform: scale(1.05);
-			}
-			
-			button:active {
-			    background-color: #145a32;
-			}
-			
-			/* Readonly Inputs */
-			input[readonly] {
-			    background-color: #f1f1f1;
-			    cursor: not-allowed;
-			}
-			
-  			
-   </style>
 </head>
 <body>
   <header>
-        <h1 id="navi">Crop Management</h1>
-        <nav>
-            <a href="fertilizer-management.html">Fertilizer Management</a>
-        </nav>
-
-        <!-- Hamburger Menu -->
-        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
-
-        <!-- Menu -->
-        <div id="menu" class="menu">
-            <div id="username" class="username"></div>
-            <a href="Homepage.html">Home</a>
-            <a href="about-us.html">About Us</a>
-            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
-            <div class="logout">
-                <button id="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    </header>
-
+    <h1 id="navi">Crop Management</h1>
+    <nav>
+      <a href="fertilizer-management.html">Fertilizer Management</a>
+    </nav>
+    <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <div id="menu" class="menu">
+      <div id="username" class="username"></div>
+      <a href="Homepage.html">Home</a>
+      <a href="about-us.html">About Us</a>
+      <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+      <div class="logout">
+        <button id="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
   <main>
     <div class="container">
       <form id="cropForm">
@@ -122,7 +43,6 @@
           <option value="Coastal">Coastal</option>
           <option value="Desert">Desert</option>
         </select>
-        
         <label for="climate">Climate:</label>
         <select id="climate" name="climate">
           <option>Humid & Fertile (Valley)</option>
@@ -132,10 +52,9 @@
           <option>Tropical, Humid (Coastal)</option>
           <option>Arid, Hot, Dry (Desert)</option>
         </select>
-        
         <label for="soiltype">Soil Type:</label>
         <select id="soiltype" name="soiltype">
-          <option value="Alluvial Soil">Alluvial Soil </option>
+          <option value="Alluvial Soil">Alluvial Soil</option>
           <option value="Loamy Soil">Loamy Soil</option>
           <option value="Volcanic Soil">Volcanic Soil</option>
           <option value="Black Soil">Black Soil</option>
@@ -145,8 +64,6 @@
           <option value="Saline Soil">Saline Soil</option>
           <option value="Arid Soil">Arid Soil</option>
         </select>
-        
-        
         <label for="majorCrop">Major Crop:</label>
         <select id="majorCrop" name="majorCrop">
           <option value="Rice">Rice (Alluvial Soil)</option>
@@ -163,32 +80,27 @@
           <option value="Finger Millet">Finger Millet (Black Soil)</option>
           <option value="Groundnut">Groundnut (Black Soil)</option>
           <option value="Cashew">Cashew (Laterite Soil)</option>
-          <option>Rubber (Laterite Soil)</option>
-          <option>Tea (Laterite Soil)</option>
+          <option value="Rubber">Rubber (Laterite Soil)</option>
           <option value="Wheat">Wheat (Clayey Soil)</option>
           <option value="Maize">Maize (Clayey Soil)</option>
           <option value="Sunflower">Sunflower (Clayey Soil)</option>
           <option value="Barley">Barley (Clayey Soil)</option>
           <option value="Coconut">Coconut (Sandy Soil)</option>
-          <option>Cashew (Sandy Soil)</option>
           <option value="Salt-Tolerant Rice">Salt-Tolerant Rice (Saline Soil)</option>
           <option value="Date Palm">Date Palm (Arid Soil)</option>
           <option value="Guar">Guar (Arid Soil)</option>
           <option value="Pearl Millet">Pearl Millet (Arid Soil)</option>
           <option value="Aloe Vera">Aloe Vera (Arid Soil)</option>
         </select>
-        
         <button type="button" id="calculate">Calculate</button>
-                
         <label for="totalPeriod">Total Period (Days):</label>
         <input type="text" id="totalPeriod" name="totalPeriod" readonly>
-                
         <label for="growthPeriod">Growth Period (Days):</label>
         <input type="text" id="growthPeriod" name="growthPeriod" readonly>
-                
         <label for="productivityPeriod">Productivity Period (Days):</label>
         <input type="text" id="productivityPeriod" name="productivityPeriod" readonly>
       </form>
+      <div id="result"></div>
     </div>
   </main>
   <footer>

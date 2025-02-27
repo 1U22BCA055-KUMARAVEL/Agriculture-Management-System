@@ -1,45 +1,80 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const landformSelect = document.getElementById("landform");
+    const climateSelect = document.getElementById("climate");
+    const soilTypeSelect = document.getElementById("soiltype");
     const cropSelect = document.getElementById("majorCrop");
     const calculateButton = document.getElementById("calculate");
-    const resultDiv = document.getElementById("result");
+	document.addEventListener("DOMContentLoaded", function () {
+	    console.log("DOM Loaded");
+	    console.log("landform:", document.getElementById("landform"));
+	    console.log("climate:", document.getElementById("climate"));
+	    console.log("soiltype:", document.getElementById("soiltype"));
+	    console.log("majorCrop:", document.getElementById("majorCrop"));
+	    console.log("calculate:", document.getElementById("calculate"));
+	});
 
-    if (!cropSelect || !calculateButton || !resultDiv) {
-        console.error("Missing required DOM elements.");
-        return;
+    const climateMapping = {
+        "Valley": "Humid & Fertile (Valley)",
+        "Mountain Slopes": "Cool, Humid, Temperate (Mountain-Slopes)",
+        "Plateau": "Semi-Arid, Dry Temperate (Plateau)",
+        "Plains": "Temperate, Subtropical (Plains)",
+        "Coastal": "Tropical, Humid (Coastal)",
+        "Desert": "Arid, Hot, Dry (Desert)"
+    };
+
+    const cropSoilMapping = {
+        "Rice": "Alluvial Soil", "Sugarcane": "Alluvial Soil", "Jute": "Alluvial Soil",
+        "Banana": "Alluvial Soil", "Tea": "Loamy Soil", "Apple": "Loamy Soil",
+        "Walnut": "Loamy Soil", "Cardamom": "Loamy Soil", "Coffee": "Volcanic Soil",
+        "Sorghum": "Black Soil", "Cotton": "Black Soil", "Finger Millet": "Black Soil",
+        "Groundnut": "Black Soil", "Cashew": "Laterite Soil", "Rubber": "Laterite Soil",
+        "Wheat": "Clayey Soil", "Maize": "Clayey Soil", "Sunflower": "Clayey Soil",
+        "Barley": "Clayey Soil", "Coconut": "Sandy Soil", "Salt-Tolerant Rice": "Saline Soil",
+        "Date Palm": "Arid Soil", "Guar": "Arid Soil", "Pearl Millet": "Arid Soil",
+        "Aloe Vera": "Arid Soil"
+    };
+
+    function validateSelection() {
+        const selectedLandform = landformSelect.value;
+        const selectedClimate = climateSelect.value;
+        const selectedSoil = soilTypeSelect.value;
+        const selectedCropText = cropSelect.options[cropSelect.selectedIndex].text;
+        const selectedCrop = cropSelect.value;
+
+        if (climateMapping[selectedLandform] !== selectedClimate) {
+            alert("Selected Climate does not match the Landform.");
+            return false;
+        }
+
+        if (cropSoilMapping[selectedCrop] !== selectedSoil) {
+            alert("Selected Soil Type does not match the Major Crop.");
+            return false;
+        }
+
+        return selectedCrop;
     }
 
     function fetchCropPeriods(crop) {
-        if (!crop) {
-            alert("Please select a valid crop.");
-            return;
-        }
-
         const fetchUrl = `/Agriculture-Management-System/CropManagementServlet?crop=${encodeURIComponent(crop)}`;
-        console.log("Fetching crop data from:", fetchUrl);
-
+        
         fetch(fetchUrl)
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    resultDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+                    alert("Error: " + data.error);
                 } else {
-                    resultDiv.innerHTML = `
-                        <p><strong>Total Period:</strong> ${data.totalPeriod} days</p>
-                        <p><strong>Growth Period:</strong> ${data.growthPeriod} days</p>
-                        <p><strong>Productivity Period:</strong> ${data.productivityPeriod} days</p>
-                    `;
+                    document.getElementById("totalPeriod").value = data.totalPeriod;
+                    document.getElementById("growthPeriod").value = data.growthPeriod;
+                    document.getElementById("productivityPeriod").value = data.productivityPeriod;
                 }
             })
-            .catch(error => {
-                console.error("Error fetching crop periods:", error);
-                resultDiv.innerHTML = `<p style="color:red;">Error fetching crop periods: ${error.message}</p>`;
-            });
+            .catch(error => alert("Error fetching crop data: " + error.message));
     }
 
     calculateButton.addEventListener("click", function () {
-        fetchCropPeriods(cropSelect.value.trim());
+        const validCrop = validateSelection();
+        if (validCrop) {
+            fetchCropPeriods(validCrop);
+        }
     });
 });
