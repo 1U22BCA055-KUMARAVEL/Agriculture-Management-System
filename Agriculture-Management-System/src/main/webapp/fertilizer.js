@@ -21,13 +21,29 @@ $(document).ready(function() {
                     $("#fertilizerOutput").val("Error: " + response.error);
                     return;
                 }
+                
+                var nitrogen = response.nitrogen ? parseFloat(response.nitrogen) : 0;
+                var phosphorus = response.phosphorus ? parseFloat(response.phosphorus) : 0;
+                var potassium = response.potassium ? parseFloat(response.potassium) : 0;
+                var organicMatter = response.organicMatter ? response.organicMatter : "";
+
+                if (response.nitrogenReduction) {
+                    nitrogen -= parseFloat(response.nitrogenReduction);
+                }
+                if (response.phosphorusReduction) {
+                    phosphorus -= parseFloat(response.phosphorusReduction);
+                }
+                if (response.potassiumReduction) {
+                    potassium -= parseFloat(response.potassiumReduction);
+                }
+                
                 var resultText = "";
                 if (fertilizerType === "natural") {
-                    resultText = "Organic Matter: " + response.organicMatter;
+                    resultText = "Organic Matter: " + organicMatter;
                 } else if (fertilizerType === "man-made") {
-                    resultText = "Nitrogen: " + response.nitrogen + "\n" +
-                                 "Phosphorus: " + response.phosphorus + "\n" +
-                                 "Potassium: " + response.potassium;
+                    resultText = "Nitrogen: " + nitrogen.toFixed(2) + " kg per hectare\n" +
+                                 "Phosphorus: " + phosphorus.toFixed(2) + " kg per hectare\n" +
+                                 "Potassium: " + potassium.toFixed(2) + " kg per hectare";
                 }
 
                 $("#fertilizerOutput").val(resultText);

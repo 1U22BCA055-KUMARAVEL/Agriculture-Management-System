@@ -4,57 +4,46 @@ document.addEventListener("DOMContentLoaded", function () {
     const soilTypeSelect = document.getElementById("soiltype");
     const cropSelect = document.getElementById("majorCrop");
     const calculateButton = document.getElementById("calculate");
-	document.addEventListener("DOMContentLoaded", function () {
-	    console.log("DOM Loaded");
-	    console.log("landform:", document.getElementById("landform"));
-	    console.log("climate:", document.getElementById("climate"));
-	    console.log("soiltype:", document.getElementById("soiltype"));
-	    console.log("majorCrop:", document.getElementById("majorCrop"));
-	    console.log("calculate:", document.getElementById("calculate"));
-	});
 
-    const climateMapping = {
-        "Valley": "Humid & Fertile (Valley)",
-        "Mountain Slopes": "Cool, Humid, Temperate (Mountain-Slopes)",
-        "Plateau": "Semi-Arid, Dry Temperate (Plateau)",
-        "Plains": "Temperate, Subtropical (Plains)",
-        "Coastal": "Tropical, Humid (Coastal)",
-        "Desert": "Arid, Hot, Dry (Desert)"
-    };
-
-    const cropSoilMapping = {
-        "Rice": "Alluvial Soil", "Sugarcane": "Alluvial Soil", "Jute": "Alluvial Soil",
-        "Banana": "Alluvial Soil", "Tea": "Loamy Soil", "Apple": "Loamy Soil",
-        "Walnut": "Loamy Soil", "Cardamom": "Loamy Soil", "Coffee": "Volcanic Soil",
-        "Sorghum": "Black Soil", "Cotton": "Black Soil", "Finger Millet": "Black Soil",
-        "Groundnut": "Black Soil", "Cashew": "Laterite Soil", "Rubber": "Laterite Soil",
-        "Wheat": "Clayey Soil", "Maize": "Clayey Soil", "Sunflower": "Clayey Soil",
-        "Barley": "Clayey Soil", "Coconut": "Sandy Soil", "Salt-Tolerant Rice": "Saline Soil",
-        "Date Palm": "Arid Soil", "Guar": "Arid Soil", "Pearl Millet": "Arid Soil",
-        "Aloe Vera": "Arid Soil"
-    };
+    function extractBracketValue(optionText) {
+        const match = optionText.match(/\((.*?)\)/);
+        return match ? match[1].trim() : null;
+    }
 
     function validateSelection() {
         const selectedLandform = landformSelect.value;
         const selectedClimate = climateSelect.value;
-        const selectedSoil = soilTypeSelect.value;
-        const selectedCropText = cropSelect.options[cropSelect.selectedIndex].text;
+        const selectedSoilType = soilTypeSelect.value;
         const selectedCrop = cropSelect.value;
 
-        if (climateMapping[selectedLandform] !== selectedClimate) {
-            alert("Selected Climate does not match the Landform.");
-            return false;
+        const landformBracketValue = extractBracketValue(climateSelect.options[climateSelect.selectedIndex].text);
+        const climateBracketValue = extractBracketValue(soilTypeSelect.options[soilTypeSelect.selectedIndex].text);
+        const soilBracketValue = extractBracketValue(cropSelect.options[cropSelect.selectedIndex].text);
+
+        if (landformBracketValue !== selectedLandform) {
+            alert("Error: Selected Climate does not match the expected Landform.");
+            return null;
         }
 
-        if (cropSoilMapping[selectedCrop] !== selectedSoil) {
-            alert("Selected Soil Type does not match the Major Crop.");
-            return false;
+        if (climateBracketValue !== selectedClimate) {
+            alert("Error: Selected Soil Type does not match the expected Climate.");
+            return null;
+        }
+
+        if (soilBracketValue !== selectedSoilType) {
+            alert("Error: Selected Major Crop does not match the expected Soil Type.");
+            return null;
         }
 
         return selectedCrop;
     }
 
     function fetchCropPeriods(crop) {
+        if (!crop) {
+            alert("Error: Invalid selection. Please check the dependencies between fields.");
+            return;
+        }
+		else{
         const fetchUrl = `/Agriculture-Management-System/CropManagementServlet?crop=${encodeURIComponent(crop)}`;
         
         fetch(fetchUrl)
@@ -70,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => alert("Error fetching crop data: " + error.message));
     }
+	}
 
     calculateButton.addEventListener("click", function () {
         const validCrop = validateSelection();
