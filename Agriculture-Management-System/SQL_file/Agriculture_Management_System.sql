@@ -1,74 +1,59 @@
 create database Agriculture_Management_System;
 use Agriculture_Management_System;
 
-
-
-
-
 -- Creating Landforms Table
-CREATE TABLE Landforms (
-    landform_id INT PRIMARY KEY AUTO_INCREMENT,
-    landform_name VARCHAR(100) UNIQUE NOT NULL,
-    climate VARCHAR(100) NOT NULL
-);
-
-INSERT INTO Landforms (landform_name, climate) VALUES 
-('Valley', 'Humid, Fertile'),
-('Mountain Slopes', 'Cool, Humid, Temperate'),
-('Plateau', 'Semi-Arid, Dry Temperate'),
-('Plains', 'Temperate, Subtropical'),
-('Coastal', 'Tropical, Humid'),
-('Desert', 'Arid, Hot, Dry');
-
--- Creating SoilTypes Table
-CREATE TABLE SoilTypes (
-    soil_id INT PRIMARY KEY AUTO_INCREMENT,
-    soil_name VARCHAR(100) UNIQUE NOT NULL
-);
-
-INSERT INTO SoilTypes (soil_name) VALUES 
-('Alluvial Soil'), ('Loamy Soil'), ('Volcanic Soil'), 
-('Black Soil'), ('Laterite Soil'), ('Clayey Soil'), 
-('Sandy Soil'), ('Saline Soil'), ('Arid Soil');
-
 -- Creating Crops Table
 CREATE TABLE Crops (
     crop_id INT PRIMARY KEY AUTO_INCREMENT,
-    crop_name VARCHAR(100) UNIQUE NOT NULL,
-    landform_id INT,
-    soil_id INT,
-    is_nitrogen_fixer BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (landform_id) REFERENCES Landforms(landform_id) ON DELETE SET NULL,
-    FOREIGN KEY (soil_id) REFERENCES SoilTypes(soil_id) ON DELETE SET NULL
+    crop_name VARCHAR(100) UNIQUE NOT NULL
+    
 );
 
-INSERT INTO Crops (crop_name, landform_id, soil_id) VALUES 
-('Rice', 1, 1), ('Sugarcane', 1, 1), ('Jute', 1, 1), ('Banana', 1, 1),  
-('Tea', 2, 2), ('Coffee', 2, 2), ('Apple', 2, 2), ('Walnut', 2, 2),  
-('Sorghum', 3, 4), ('Cotton', 3, 4), ('Finger Millet', 3, 4), ('Groundnut', 3, 4),  
-('Wheat', 4, 5), ('Maize', 4, 5), ('Sunflower', 4, 5), ('Barley', 4, 5),  
-('Coconut', 5, 7), ('Cashew', 5, 7), ('Salt-Tolerant Rice', 5, 8),  
-('Date Palm', 6, 9), ('Guar', 6, 9), ('Pearl Millet', 6, 9), ('Aloe Vera', 6, 9);
+INSERT INTO Crops (crop_name) VALUES 
+('Rice'), ('Sugarcane'), ('Jute'), ('Banana'),  
+('Tea'), ('Coffee'), ('Apple'), ('Walnut'),  
+('Sorghum'), ('Cotton'), ('Finger Millet'), ('Groundnut'),  
+('Wheat'), ('Maize'), ('Sunflower'), ('Barley'),  
+('Coconut'), ('Cashew'), ('Salt-Tolerant Rice'),  
+('Date Palm'), ('Guar'), ('Pearl Millet'), ('Aloe Vera');
 
-UPDATE Crops SET is_nitrogen_fixer = TRUE WHERE crop_name IN ('Groundnut', 'Soybean', 'Lentils', 'Peas', 'Chickpeas');
 
 -- Creating CropPeriods Table
 CREATE TABLE CropPeriods (
     period_id INT PRIMARY KEY AUTO_INCREMENT,
-    crop_id INT NOT NULL,
+    crop_id INT NOT NULL,  -- Removed AUTO_INCREMENT
     total_period INT NOT NULL,  -- Total crop duration in days
     growth_period INT NOT NULL,  -- Vegetative growth stage in days
     productivity_period INT NOT NULL,  -- Harvest or yield stage in days
     FOREIGN KEY (crop_id) REFERENCES Crops(crop_id) ON DELETE CASCADE
 );
 
+-- Fixed INSERT statement: Added `crop_id`
 INSERT INTO CropPeriods (crop_id, total_period, growth_period, productivity_period) VALUES
-(1, 150, 90, 60), (2, 365, 240, 125), (3, 120, 80, 40), (4, 300, 180, 120), 
-(5, 450, 300, 150), (6, 365, 250, 115), (7, 200, 150, 50), (8, 240, 180, 60), 
-(9, 210, 160, 50), (10, 120, 70, 50), (11, 180, 110, 70), (12, 110, 75, 35), 
-(13, 140, 90, 50), (14, 180, 120, 60), (15, 130, 90, 40), (16, 150, 100, 50), 
-(17, 120, 85, 35), (18, 365, 300, 65), (19, 200, 140, 60), (20, 140, 90, 50), 
-(21, 365, 250, 115), (22, 90, 60, 30), (23, 120, 80, 40), (24, 240, 180, 60);
+(1, 150, 90, 60),   -- Rice
+(2, 365, 240, 125), -- Sugarcane
+(3, 120, 80, 40),   -- Jute
+(4, 300, 180, 120), -- Banana
+(5, 450, 300, 150), -- Tea
+(6, 365, 250, 115), -- Coffee
+(7, 200, 150, 50),  -- Apple
+(8, 240, 180, 60),  -- Walnut
+(9, 210, 160, 50),  -- Sorghum
+(10, 120, 70, 50),  -- Cotton
+(11, 180, 110, 70), -- Finger Millet
+(12, 110, 75, 35),  -- Groundnut
+(13, 140, 90, 50),  -- Wheat
+(14, 180, 120, 60), -- Maize
+(15, 130, 90, 40),  -- Sunflower
+(16, 150, 100, 50), -- Barley
+(17, 120, 85, 35),  -- Coconut
+(18, 365, 300, 65), -- Cashew
+(19, 200, 140, 60), -- Salt-Tolerant Rice
+(20, 140, 90, 50),  -- Date Palm
+(21, 365, 250, 115), -- Guar
+(22, 90, 60, 30),   -- Pearl Millet
+(23, 120, 80, 40);  -- Aloe Vera
+SELECT * FROM Crops;
 
 -- Creating FertilizerRecommendations Table
 CREATE TABLE FertilizerRecommendations (
@@ -95,3 +80,20 @@ INSERT INTO FertilizerRecommendations (crop_id, fertilizer_type, organic_matter_
 (19, 'natural', 2500, NULL, NULL, NULL), (20, 'man-made', NULL, 120, 70, 80), 
 (21, 'man-made', NULL, 70, 40, 50), (22, 'man-made', NULL, 80, 60, 70), 
 (23, 'man-made', NULL, 90, 65, 75);
+
+CREATE TABLE FertilizerReduction (
+    reduction_id INT PRIMARY KEY AUTO_INCREMENT,
+    previous_crop_id INT NOT NULL,  -- The nitrogen-fixing crop planted previously
+    current_crop_id INT NOT NULL,   -- The crop currently being planted
+    nitrogen_reduction DECIMAL(10,2) DEFAULT 0,  -- Reduction in Nitrogen (kg/ha)
+    phosphorus_reduction DECIMAL(10,2) DEFAULT 0, -- Reduction in Phosphorus (kg/ha)
+    potassium_reduction DECIMAL(10,2) DEFAULT 0,  -- Reduction in Potassium (kg/ha)
+    FOREIGN KEY (previous_crop_id) REFERENCES Crops(crop_id) ON DELETE CASCADE,
+    FOREIGN KEY (current_crop_id) REFERENCES Crops(crop_id) ON DELETE CASCADE
+);
+INSERT INTO FertilizerReduction (previous_crop_id, current_crop_id, nitrogen_reduction, phosphorus_reduction, potassium_reduction) VALUES
+(12, 1, 20, 5, 0),  -- Groundnut before Rice reduces 20 kg/ha Nitrogen and 5 kg/ha Phosphorus
+(21, 2, 25, 8, 0),  -- Guar before Sugarcane reduces 25 kg/ha Nitrogen and 8 kg/ha Phosphorus
+(12, 14, 15, 4, 0), -- Groundnut before Maize reduces 15 kg/ha Nitrogen and 4 kg/ha Phosphorus
+(21, 10, 18, 6, 0), -- Guar before Cotton reduces 18 kg/ha Nitrogen and 6 kg/ha Phosphorus
+(22, 16, 10, 3, 0); -- Pearl Millet before Barley reduces 10 kg/ha Nitrogen and 3 kg/ha Phosphorus
