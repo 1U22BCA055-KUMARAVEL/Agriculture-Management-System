@@ -1,174 +1,110 @@
+/* fertilizer-management.html */
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fertilizer Management</title>
-      <link rel="icon" href="img/agri2.jpg" type="image">
+    <link rel="icon" href="img/agri2.jpg" type="image">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!--  link rel="stylesheet" href="style.css"-->
     <script src="fertilizer.js"></script>
     <script src="loginout.js"></script>
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-    h3{
-    color:white;
-    }
-
-/* Form Styling */
-#fertilizerForm {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-    max-width: 600px;
-    width: 90%;
-}
-
-#fertilizerForm label {
-    display: block;
-    margin-bottom: 8px;
-    color: #2e7d32;
-    font-weight: 500;
-    font-size: 1.1rem;
-}
-
-#fertilizerForm select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #c8e6c9;
-    border-radius: 6px;
-    background-color: #e8f5e9;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-#fertilizerForm select:focus {
-    outline: none;
-    border-color: #2e7d32;
-    box-shadow: 0 0 8px rgba(46, 125, 50, 0.3);
-}
-
-#fertilizerForm button[type="submit"] {
-    background-color: #2e7d32;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-#fertilizerForm button[type="submit"]:hover {
-    background-color: #1b5e20;
-}
-
-/* Results Section */
-#fertilizerResults {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-    max-width: 600px;
-    width: 90%;
-}
-
-#fertilizerOutput {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid #c8e6c9;
-    border-radius: 6px;
-    background-color: #e8f5e9;
-    font-size: 1rem;
-    line-height: 1.6;
-    resize: vertical;
-}
-
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #fertilizerForm, #fertilizerResults {
-        width: 95%;
-        padding: 20px;
-    }
-
-    
-}
-    </style>
 </head>
 <body>
 <header>
-<h1 id="navi">Fertilizer Management</h1>
-	<nav>
-			
-            <a href="Crop-management.html">Crop Management</a>
-        </nav>
-        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+    <h1 id="navi">Fertilizer Management</h1>
+    <nav>
+        <a href="Crop-management.html">Crop Management</a>
+    </nav>
+    <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <div id="menu" class="menu">
+        <div id="username" class="username"></div>
+        <a href="Homepage.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+        <div class="logout">
+            <button id="logout-btn" onclick="logout()">Logout</button>
         </div>
-
-        <!-- Menu -->
-        <div id="menu" class="menu">
-            <div id="username" class="username"></div>
-            <a href="Homepage.html">Home</a>
-            <a href="about-us.html">About Us</a>
-            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
-            <div class="logout">
-                <button id="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-        
-        </header>
-    
-    <form id="fertilizerForm">
-    	<label for="previousCrop">Previous Crop</label>
-    	<select id="previousCrop" name="previousCrop">
-            <option value="Wheat">Groundnut</option>
-            <option value="Rice">Rice</option>
-            <option value="Maize">Maize</option>
-            <!-- Add more crops as needed -->
-        </select>
-        <br><br>
-    	
-        <label for="currentCrop">Current Crop:</label>
-        <select id="currentCrop" name="currentCrop">
-            <option value="Wheat">Wheat</option>
-            <option value="Rice">Rice</option>
-            <option value="Maize">Maize</option>
-            <!-- Add more crops as needed -->
-        </select>
-        <br><br>
-
-        	
-
-        <label for="fertilizerType">Select Fertilizer Type:</label>
-        <select id="fertilizerType" name="fertilizerType">
-            <option value="natural">Natural</option>
-            <option value="man-made">Man-made</option>
-        </select>
-        <br><br>
-
-        <button type="submit">Get Recommendations</button>
-    </form>
-
+    </div>
+</header>
+<form id="fertilizerForm" method="post" action="FertilizerServlet.java">
+    <label for="previousCropSearch">Search Previous Crop:</label>
+    <input type="text" id="previousCropSearch" placeholder="Type to search...">
+    <select id="previousCrop" name="previousCrop">
+        <option value="Rice">Rice</option>
+        <option value="Sugarcane">Sugarcane</option>
+        <option value="Jute">Jute</option>
+        <option value="Banana">Banana</option>
+        <option value="Tea">Tea</option>
+        <option value="Coffee">Coffee</option>
+        <option value="Apple">Apple</option>
+        <option value="Walnut">Walnut</option>
+        <option value="Sorghum">Sorghum</option>
+        <option value="Cotton">Cotton</option>
+        <option value="Finger Millet">Finger Millet</option>
+        <option value="Groundnut">Groundnut</option>
+        <option value="Wheat">Wheat</option>
+        <option value="Maize">Maize</option>
+        <option value="Sunflower">Sunflower</option>
+        <option value="Barley">Barley</option>
+        <option value="Coconut">Coconut</option>
+        <option value="Cashew">Cashew</option>
+        <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
+        <option value="Date Palm">Date Palm</option>
+        <option value="Guar">Guar</option>
+        <option value="Pearl Millet">Pearl Millet</option>
+        <option value="Aloe Vera">Aloe Vera</option>
+    </select>
     <br><br>
 
-    <h3>Fertilizer Recommendations:</h3>
-    <div id="fertilizerResults">
-        <textarea id="fertilizerOutput" rows="4" cols="50" readonly></textarea>
-    </div>
-
-    <footer>
-        <p>&copy; 2025 Agriculture Management System. All Rights Reserved. <a href="about-us.html">Learn More</a></p>
-    </footer>
+    <label for="currentCropSearch">Search Current Crop:</label>
+    <input type="text" id="currentCropSearch" placeholder="Type to search...">
+    <select id="currentCrop" name="currentCrop">
+        <option value="Rice">Rice</option>
+        <option value="Sugarcane">Sugarcane</option>
+        <option value="Jute">Jute</option>
+        <option value="Banana">Banana</option>
+        <option value="Tea">Tea</option>
+        <option value="Coffee">Coffee</option>
+        <option value="Apple">Apple</option>
+        <option value="Walnut">Walnut</option>
+        <option value="Sorghum">Sorghum</option>
+        <option value="Cotton">Cotton</option>
+        <option value="Finger Millet">Finger Millet</option>
+        <option value="Groundnut">Groundnut</option>
+        <option value="Wheat">Wheat</option>
+        <option value="Maize">Maize</option>
+        <option value="Sunflower">Sunflower</option>
+        <option value="Barley">Barley</option>
+        <option value="Coconut">Coconut</option>
+        <option value="Cashew">Cashew</option>
+        <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
+        <option value="Date Palm">Date Palm</option>
+        <option value="Guar">Guar</option>
+        <option value="Pearl Millet">Pearl Millet</option>
+        <option value="Aloe Vera">Aloe Vera</option>
+    </select>
+    <br><br>
+    <label for="fertilizerType">Fertilizer Type:</label>
+    <select id="fertilizerType" name="fertilizerType">
+        <option value="natural">Natural</option>
+        <option value="man-made">Man-made</option>
+    </select>
+    <br><br>
+    <button type="submit">Get Recommendations</button>
+</form>
+<h3>Fertilizer Recommendations:</h3>
+<div id="fertilizerResults">
+    <textarea id="fertilizerOutput" rows="4" cols="50" readonly></textarea>
+</div>
+<footer>
+    <p>&copy; 2025 Agriculture Management System. All Rights Reserved. <a href="about-us.html">Learn More</a></p>
+</footer>
 </body>
 </html>
