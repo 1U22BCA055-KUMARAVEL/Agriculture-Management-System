@@ -1,4 +1,4 @@
-/* fertilizer-management.html */
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,139 @@
     <script src="fertilizer.js"></script>
     <script src="loginout.js"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      margin: 30px auto;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    select, input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #c8e6c9;
+      font-size: 1rem;
+      background-color: white;
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1b5e20;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #2e7d32;
+      color: white;
+      position: relative;
+      width: 100%;
+      bottom: 0;
+    }
+
+
+        /* Custom styles for the combined dropdown */
+        .custom-select {
+          position: relative;
+          width: 100%;
+        }
+
+        .custom-select input {
+          width: 100%;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #c8e6c9;
+          font-size: 1rem;
+          background-color: white;
+        }
+
+        .custom-select select {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          max-height: 200px;
+          overflow-y: auto;
+          border: 1px solid #c8e6c9;
+          border-radius: 0 0 5px 5px;
+          background-color: white;
+          z-index: 10;
+          display: none;
+        }
+
+        .custom-select select option {
+          padding: 10px;
+          cursor: pointer;
+        }
+
+        .custom-select select option:hover {
+          background-color: #f0f0f0;
+        }
+
+        #fertilizerOutput {
+          width: 100%;
+          height: 120px;
+          padding: 10px;
+          margin-top: 15px;
+          border: 1px solid #c8e6c9;
+          border-radius: 5px;
+          resize: none;
+          font-family: Arial, sans-serif;
+        }
+    
+    </style>
 </head>
 <body>
 <header>
@@ -33,64 +166,70 @@
         </div>
     </div>
 </header>
+<!-- Replace the existing form dropdown sections with this -->
 <form id="fertilizerForm" method="post" action="FertilizerServlet.java">
-    <label for="previousCropSearch">Search Previous Crop:</label>
-    <input type="text" id="previousCropSearch" placeholder="Type to search...">
-    <select id="previousCrop" name="previousCrop">
-        <option value="Rice">Rice</option>
-        <option value="Sugarcane">Sugarcane</option>
-        <option value="Jute">Jute</option>
-        <option value="Banana">Banana</option>
-        <option value="Tea">Tea</option>
-        <option value="Coffee">Coffee</option>
-        <option value="Apple">Apple</option>
-        <option value="Walnut">Walnut</option>
-        <option value="Sorghum">Sorghum</option>
-        <option value="Cotton">Cotton</option>
-        <option value="Finger Millet">Finger Millet</option>
-        <option value="Groundnut">Groundnut</option>
-        <option value="Wheat">Wheat</option>
-        <option value="Maize">Maize</option>
-        <option value="Sunflower">Sunflower</option>
-        <option value="Barley">Barley</option>
-        <option value="Coconut">Coconut</option>
-        <option value="Cashew">Cashew</option>
-        <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
-        <option value="Date Palm">Date Palm</option>
-        <option value="Guar">Guar</option>
-        <option value="Pearl Millet">Pearl Millet</option>
-        <option value="Aloe Vera">Aloe Vera</option>
-    </select>
+    <label for="previousCrop">Previous Crop:</label>
+    <div class="custom-select">
+        <input type="text" id="previousCropInput" placeholder="Type to search..." autocomplete="off">
+        <select id="previousCrop" name="previousCrop">
+            <option value="Rice">Rice</option>
+            <option value="Sugarcane">Sugarcane</option>
+            <option value="Jute">Jute</option>
+            <option value="Banana">Banana</option>
+            <option value="Tea">Tea</option>
+            <option value="Coffee">Coffee</option>
+            <option value="Apple">Apple</option>
+            <option value="Walnut">Walnut</option>
+            <option value="Sorghum">Sorghum</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Finger Millet">Finger Millet</option>
+            <option value="Groundnut">Groundnut</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Maize">Maize</option>
+            <option value="Sunflower">Sunflower</option>
+            <option value="Barley">Barley</option>
+            <option value="Coconut">Coconut</option>
+            <option value="Cashew">Cashew</option>
+            <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
+            <option value="Date Palm">Date Palm</option>
+            <option value="Guar">Guar</option>
+            <option value="Pearl Millet">Pearl Millet</option>
+            <option value="Aloe Vera">Aloe Vera</option>
+        </select>
+    </div>
     <br><br>
 
-    <label for="currentCropSearch">Search Current Crop:</label>
-    <input type="text" id="currentCropSearch" placeholder="Type to search...">
-    <select id="currentCrop" name="currentCrop">
-        <option value="Rice">Rice</option>
-        <option value="Sugarcane">Sugarcane</option>
-        <option value="Jute">Jute</option>
-        <option value="Banana">Banana</option>
-        <option value="Tea">Tea</option>
-        <option value="Coffee">Coffee</option>
-        <option value="Apple">Apple</option>
-        <option value="Walnut">Walnut</option>
-        <option value="Sorghum">Sorghum</option>
-        <option value="Cotton">Cotton</option>
-        <option value="Finger Millet">Finger Millet</option>
-        <option value="Groundnut">Groundnut</option>
-        <option value="Wheat">Wheat</option>
-        <option value="Maize">Maize</option>
-        <option value="Sunflower">Sunflower</option>
-        <option value="Barley">Barley</option>
-        <option value="Coconut">Coconut</option>
-        <option value="Cashew">Cashew</option>
-        <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
-        <option value="Date Palm">Date Palm</option>
-        <option value="Guar">Guar</option>
-        <option value="Pearl Millet">Pearl Millet</option>
-        <option value="Aloe Vera">Aloe Vera</option>
-    </select>
+    <label for="currentCrop">Current Crop:</label>
+    <div class="custom-select">
+        <input type="text" id="currentCropInput" placeholder="Type to search..." autocomplete="off">
+        <select id="currentCrop" name="currentCrop">
+            <option value="Rice">Rice</option>
+            <option value="Sugarcane">Sugarcane</option>
+            <option value="Jute">Jute</option>
+            <option value="Banana">Banana</option>
+            <option value="Tea">Tea</option>
+            <option value="Coffee">Coffee</option>
+            <option value="Apple">Apple</option>
+            <option value="Walnut">Walnut</option>
+            <option value="Sorghum">Sorghum</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Finger Millet">Finger Millet</option>
+            <option value="Groundnut">Groundnut</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Maize">Maize</option>
+            <option value="Sunflower">Sunflower</option>
+            <option value="Barley">Barley</option>
+            <option value="Coconut">Coconut</option>
+            <option value="Cashew">Cashew</option>
+            <option value="Salt-Tolerant Rice">Salt-Tolerant Rice</option>
+            <option value="Date Palm">Date Palm</option>
+            <option value="Guar">Guar</option>
+            <option value="Pearl Millet">Pearl Millet</option>
+            <option value="Aloe Vera">Aloe Vera</option>
+        </select>
+    </div>
     <br><br>
+
     <label for="fertilizerType">Fertilizer Type:</label>
     <select id="fertilizerType" name="fertilizerType">
         <option value="natural">Natural</option>
@@ -98,8 +237,7 @@
     </select>
     <br><br>
     <button type="submit">Get Recommendations</button>
-</form>
-<h3>Fertilizer Recommendations:</h3>
+</form><h3>Fertilizer Recommendations:</h3>
 <div id="fertilizerResults">
     <textarea id="fertilizerOutput" rows="4" cols="50" readonly></textarea>
 </div>

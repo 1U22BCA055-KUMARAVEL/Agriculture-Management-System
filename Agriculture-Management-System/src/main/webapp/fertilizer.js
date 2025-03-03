@@ -1,15 +1,78 @@
 $(document).ready(function() {
-    const nitrogenFixingAgents = ["Groundnut", "Guar", "Pea", "Lentil", "Soybean"];
-    const phosphorusFixingAgents = ["Sunflower", "Alfalfa", "Chickpea"];
-    const potassiumFixingAgents = ["Banana", "Coconut", "Papaya"];
-
+    // Setup for custom select dropdowns
+    function setupCustomSelect(inputId, selectId) {
+        const $input = $(inputId);
+        const $select = $(selectId);
+        
+        // Hide the original select element
+        $select.css('display', 'none');
+        
+        // Show/hide the select when input is focused/blurred
+        $input.on('focus', function() {
+            $select.show();
+            filterOptions($(this).val().toLowerCase(), $select);
+        });
+        
+        // When clicking outside the custom select area, hide the dropdown
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.custom-select').length) {
+                $select.hide();
+            }
+        });
+        
+        // When typing in the input, filter the options
+        $input.on('keyup', function() {
+            filterOptions($(this).val().toLowerCase(), $select);
+        });
+        
+        // When selecting an option, update the input and hide the select
+        $select.on('change', function() {
+            $input.val($(this).find('option:selected').text());
+            $select.hide();
+        });
+        
+        // When clicking on an option, update the input and hide the select
+        $select.on('click', 'option', function() {
+            $input.val($(this).text());
+            $select.val($(this).val()).change();
+            $select.hide();
+        });
+        
+        // Set initial value
+        if ($select.val()) {
+            $input.val($select.find('option:selected').text());
+        }
+    }
+    
+    // Filter options in the dropdown
+    function filterOptions(searchText, $select) {
+        $select.find('option').each(function() {
+            const optionText = $(this).text().toLowerCase();
+            const isMatch = optionText.includes(searchText);
+            $(this).toggle(isMatch);
+        });
+    }
+    
+    // Set up both custom select dropdowns
+    setupCustomSelect('#previousCropInput', '#previousCrop');
+    setupCustomSelect('#currentCropInput', '#currentCrop');
+    
+    // Handle form submission
     $("#fertilizerForm").submit(function(event) {
         event.preventDefault();
-
-        var previousCrop = $("#previousCrop").val();
-        var currentCrop = $("#currentCrop").val();
-        var fertilizerType = $("#fertilizerType").val();
-
+        $("#fertilizerOutput").val("Loading recommendations...");
+        
+        // Get values from the select elements
+        const previousCrop = $("#previousCrop").val();
+        const currentCrop = $("#currentCrop").val();
+        const fertilizerType = $("#fertilizerType").val();
+        
+        // Validate inputs
+        if (!previousCrop || !currentCrop) {
+            $("#fertilizerOutput").val("Please select both previous and current crops.");
+            return;
+        }
+        
         $.ajax({
             url: "/Agriculture-Management-System/FertilizerServlet",
             method: "POST",
@@ -20,22 +83,26 @@ $(document).ready(function() {
                     return;
                 }
 
-                let nitrogen = parseFloat(response.nitrogen || 0);
-                let phosphorus = parseFloat(response.phosphorus || 0);
-                let potassium = parseFloat(response.potassium || 0);
-                let organicMatter = response.organicMatter || "";
-
-                if (nitrogenFixingAgents.includes(previousCrop)) nitrogen -= parseFloat(response.nitrogenReduction || 0);
-                if (phosphorusFixingAgents.includes(previousCrop)) phosphorus -= parseFloat(response.phosphorusReduction || 0);
-                if (potassiumFixingAgents.includes(previousCrop)) potassium -= parseFloat(response.potassiumReduction || 0);
-
-                let resultText = fertilizerType === "natural" ? `Organic Matter: ${organicMatter}` : 
-                    `Nitrogen: ${nitrogen.toFixed(2)} kg/ha\nPhosphorus: ${phosphorus.toFixed(2)} kg/ha\nPotassium: ${potassium.toFixed(2)} kg/ha`;
+                let resultText = "";
+                if (fertilizerType === "natural") {
+                    resultText = `Organic Matter Recommendation:\n${response.organicMatter}`;
+                } else {
+                    resultText = `Fertilizer Recommendation (NPK):\n` +
+                                `Nitrogen: ${parseFloat(response.nitrogen || 0).toFixed(2)} kg/ha\n` +
+                                `Phosphorus: ${parseFloat(response.phosphorus || 0).toFixed(2)} kg/ha\n` +
+                                `Potassium: ${parseFloat(response.potassium || 0).toFixed(2)} kg/ha`;
+                    
+                    // Add note if previous crop was a nitrogen fixer
+                    if (parseFloat(response.nitrogenReduction || 0) > 0) {
+                        resultText += `\n\nNote: Fertilizer amounts have been reduced due to nitrogen fixation from the previous ${previousCrop} crop.`;
+                    }
+                }
 
                 $("#fertilizerOutput").val(resultText);
             },
-            error: function() {
-                alert("Error fetching fertilizer recommendations.");
+            error: function(xhr, status, error) {
+                $("#fertilizerOutput").val("Error fetching fertilizer recommendations. Please try again.");
+                console.error("AJAX Error:", status, error);
             }
         });
     });

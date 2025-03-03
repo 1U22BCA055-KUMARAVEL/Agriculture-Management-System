@@ -1,70 +1,56 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const landformSelect = document.getElementById("landform");
-    const climateSelect = document.getElementById("climate");
-    const soilTypeSelect = document.getElementById("soiltype");
-    const cropSelect = document.getElementById("majorCrop");
-    const calculateButton = document.getElementById("calculate");
+  const landformSelect = document.getElementById("landform");
+  const climateSelect = document.getElementById("climate");
+  const soilTypeSelect = document.getElementById("soiltype");
+  const cropSelect = document.getElementById("majorCrop");
+  const calculateButton = document.getElementById("calculate");
+  const resultDiv = document.getElementById("result");
 
-    function extractBracketValue(optionText) {
-        const match = optionText.match(/\((.*?)\)/);
-        return match ? match[1].trim() : null;
+  function validateSelection() {
+    const landformId = landformSelect.value;
+    const climateId = climateSelect.value;
+    const soilTypeId = soilTypeSelect.value;
+    const cropId = cropSelect.value;
+
+    if (!landformId || !climateId || !soilTypeId || !cropId) {
+      alert("Error: Please select all fields correctly.");
+      return null;
     }
 
-    function validateSelection() {
-        const selectedLandform = landformSelect.value;
-        const selectedClimate = climateSelect.value;
-        const selectedSoilType = soilTypeSelect.value;
-        const selectedCrop = cropSelect.value;
+    return { landformId, climateId, soilTypeId, cropId };
+  }
 
-        const landformBracketValue = extractBracketValue(climateSelect.options[climateSelect.selectedIndex].text);
-        const climateBracketValue = extractBracketValue(soilTypeSelect.options[soilTypeSelect.selectedIndex].text);
-        const soilBracketValue = extractBracketValue(cropSelect.options[cropSelect.selectedIndex].text);
+  function fetchCropPeriods(selection) {
+    const { landformId, climateId, soilTypeId, cropId } = selection;
 
-        if (landformBracketValue !== selectedLandform) {
-            alert("Error: Selected Climate does not match the expected Landform.");
-            return null;
+    fetch(`/Agriculture-Management-System/CropManagementServlet?landformId=${landformId}&climateId=${climateId}&soilTypeId=${soilTypeId}&cropId=${cropId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.valid) {
+          resultDiv.innerHTML = `<p class='error'>Error: ${data.error}</p>`;
+        } else {
+          displayCropData(data);
         }
+      })
+      .catch(error => {
+        resultDiv.innerHTML = `<p class='error'>Error fetching crop data: ${error.message}</p>`;
+      });
+  }
 
-        if (climateBracketValue !== selectedClimate) {
-            alert("Error: Selected Soil Type does not match the expected Climate.");
-            return null;
-        }
+  function displayCropData(data) {
+    resultDiv.innerHTML = `
+      <p><strong>Total Period:</strong> ${data.totalPeriod} days</p>
+      <p><strong>Growth Period:</strong> ${data.growthPeriod} days</p>
+      <p><strong>Productivity Period:</strong> ${data.productivityPeriod} days</p>
+    `;
+  }
 
-        if (soilBracketValue !== selectedSoilType) {
-            alert("Error: Selected Major Crop does not match the expected Soil Type.");
-            return null;
-        }
-
-        return selectedCrop;
+  calculateButton.addEventListener("click", function () {
+    const validSelection = validateSelection();
+    if (validSelection) {
+      fetchCropPeriods(validSelection);
+    } else {
+      resultDiv.innerHTML = "";
     }
-
-    function fetchCropPeriods(crop) {
-        if (!crop) {
-            alert("Error: Invalid selection. Please check the dependencies between fields.");
-            return;
-        }
-		else{
-        const fetchUrl = `/Agriculture-Management-System/CropManagementServlet?crop=${encodeURIComponent(crop)}`;
-        
-        fetch(fetchUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert("Error: " + data.error);
-                } else {
-                    document.getElementById("totalPeriod").value = data.totalPeriod;
-                    document.getElementById("growthPeriod").value = data.growthPeriod;
-                    document.getElementById("productivityPeriod").value = data.productivityPeriod;
-                }
-            })
-            .catch(error => alert("Error fetching crop data: " + error.message));
-    }
-	}
-
-    calculateButton.addEventListener("click", function () {
-        const validCrop = validateSelection();
-        if (validCrop) {
-            fetchCropPeriods(validCrop);
-        }
-    });
+  });
 });

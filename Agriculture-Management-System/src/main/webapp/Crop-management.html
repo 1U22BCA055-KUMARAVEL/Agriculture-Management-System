@@ -87,6 +87,23 @@
       width: 100%;
       bottom: 0;
     }
+    
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+    }
+    
+    .error {
+      color: #d32f2f;
+      font-weight: bold;
+    }
+    
+    .crop-info {
+      padding: 15px;
+      border: 1px solid #c8e6c9;
+      border-radius: 5px;
+      background-color: #f1f8e9;
+    }
   </style>
 </head>
 <body>
@@ -96,73 +113,37 @@
       <a href="fertilizer-management.html">Fertilizer Management</a>
     </nav>
     <!-- Hamburger Menu -->
-        <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
+    <div id="hamburger-menu" class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
 
-        <!-- Menu -->
-        <div id="menu" class="menu">
-            <div id="username" class="username"></div>
-            <a href="about-us.html">About Us</a>
-            <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
-            <div class="logout">
-                <button id="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    
+    <!-- Menu -->
+    <div id="menu" class="menu">
+      <div id="username" class="username"></div>
+      <a href="about-us.html">About Us</a>
+      <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+      <div class="logout">
+        <button id="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <div class="container">
       <form id="cropForm">
         <label for="landform">Landform:</label>
-        <select id="landform" name="landform">
-          <option value="Valley">Valley</option>
-          <option value="Mountain Slopes">Mountain Slopes</option>
-          <option value="Plateau">Plateau</option>
-          <option value="Plains">Plains</option>
-          <option value="Coastal">Coastal</option>
-          <option value="Desert">Desert</option>
-        </select>
+        <select id="landform" name="landform"></select>
 
         <label for="climate">Climate:</label>
-        <select id="climate" name="climate">
-          <option>Humid & Fertile (Valley)</option>
-          <option>Cool, Humid, Temperate (Mountain Slopes)</option>
-          <option>Semi-Arid, Dry Temperate (Plateau)</option>
-          <option>Temperate, Subtropical (Plains)</option>
-          <option>Tropical, Humid (Coastal)</option>
-          <option>Arid, Hot, Dry (Desert)</option>
-        </select>
+        <select id="climate" name="climate"></select>
 
         <label for="soiltype">Soil Type:</label>
-        <select id="soiltype" name="soiltype">
-          <option value="Alluvial Soil">Alluvial Soil (Humid & Fertile)</option>
-          <option value="Loamy Soil">Loamy Soil (Cool, Humid, Temperate)</option>
-          <option value="Volcanic Soil">Volcanic Soil (Semi-Arid, Dry Temperate)</option>
-          <option value="Black Soil">Black Soil (Temperate, Subtropical)</option>
-          <option value="Laterite Soil">Laterite Soil (Tropical, Humid)</option>
-          <option value="Clayey Soil">Clayey Soil (Temperate, Subtropical)</option>
-          <option value="Sandy Soil">Sandy Soil (Tropical, Humid)</option>
-          <option value="Saline Soil">Saline Soil (Arid, Hot, Dry)</option>
-          <option value="Arid Soil">Arid Soil (Arid, Hot, Dry)</option>
-        </select>
+        <select id="soiltype" name="soiltype"></select>
 
         <label for="majorCrop">Major Crop:</label>
-        <select id="majorCrop" name="majorCrop">
-          <option value="Rice">Rice (Alluvial Soil)</option>
-          <option value="Sugarcane">Sugarcane (Alluvial Soil)</option>
-          <option value="Jute">Jute (Alluvial Soil)</option>
-          <option value="Banana">Banana (Alluvial Soil)</option>
-          <option value="Tea">Tea (Loamy Soil)</option>
-          <option value="Apple">Apple (Loamy Soil)</option>
-          <option value="Walnut">Walnut (Loamy Soil)</option>
-          <option value="Cardamom">Cardamom (Loamy Soil)</option>
-          <option value="Coffee">Coffee (Volcanic Soil)</option>
-          <option value="Sorghum">Sorghum (Black Soil)</option>
-        </select>
+        <select id="majorCrop" name="majorCrop"></select>
 
         <button type="button" id="calculate">Calculate</button>
       </form>
@@ -177,5 +158,28 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="Crop-management.js"></script>
   <script src="loginout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      function fetchDropdownData(endpoint, selectElement) {
+        fetch(`/Agriculture-Management-System/${endpoint}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              selectElement.innerHTML = data.map(item => 
+                `<option value="${item.id}">${item.name}</option>`
+              ).join('');
+            } else {
+              selectElement.innerHTML = "<option value=''>No data available</option>";
+            }
+          })
+          .catch(error => console.error(`Error fetching ${endpoint}:`, error));
+      }
+
+      fetchDropdownData("GetLandforms", document.getElementById("landform"));
+      fetchDropdownData("GetClimates", document.getElementById("climate"));
+      fetchDropdownData("GetSoilTypes", document.getElementById("soiltype"));
+      fetchDropdownData("GetCrops", document.getElementById("majorCrop"));
+    });
+  </script>
 </body>
 </html>
