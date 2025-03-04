@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("username", username);
 
 					// Redirect to homepage
-					response.sendRedirect("Homepage.html");
+					response.sendRedirect("General_module/Homepage.html");
 				} else {
 					// Invalid password
 					response.sendRedirect("login.html?error=Invalid Username or Password");

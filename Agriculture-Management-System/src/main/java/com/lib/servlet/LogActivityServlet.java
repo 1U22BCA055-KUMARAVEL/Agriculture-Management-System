@@ -63,14 +63,12 @@ public class LogActivityServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Database connection logic
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "globalwarn1705");
 
-            // Insert or update the activity log when the user visits a module
+            // Insert a new log entry or update the existing one
             String query = "INSERT INTO activity_log (username, module_name, access_time, access_count) " +
                            "VALUES (?, ?, NOW(), 1) " +
-                           "ON DUPLICATE KEY UPDATE access_count = access_count + 1";
+                           "ON DUPLICATE KEY UPDATE access_count = access_count + 1, access_time = NOW()";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, moduleName);

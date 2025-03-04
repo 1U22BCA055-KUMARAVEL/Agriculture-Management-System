@@ -1,8 +1,6 @@
 package com.lib.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,28 +8,43 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.PrintWriter;
+
 @WebServlet("/getUsername")
 public class UserSessionServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-		HttpSession session = request.getSession(false); // Get the session if it exists
-		if (session != null && session.getAttribute("username") != null) {
-			String username = (String) session.getAttribute("username");
-			// Send a response indicating the user is logged in and include the username
-			out.print("{\"loggedIn\": true, \"username\": \"" + username + "\"}");
-		} else {
-			// Send a response indicating the user is not logged in
-			out.print("{\"loggedIn\": false}");
-		}
+        PrintWriter out = response.getWriter();
+        JSONObject jsonResponse = new JSONObject();
 
-		out.flush();
-	}
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("username") != null) {
+            String username = (String) session.getAttribute("username");
+            try {
+				jsonResponse.put("loggedIn", true);
+				jsonResponse.put("username", username);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+        } else {
+            try {
+				jsonResponse.put("loggedIn", false);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+
+        out.print(jsonResponse.toString());
+        out.flush();
+    }
 }
